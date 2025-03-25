@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure-v84(grl+(kaq-gs=xj^ck$o^fvgzjjpim75&ynf%idfpph5@u$
 DEBUG = True
 
 # Database configuration for MongoDB
-databases = {
+DATABASES = {
     'default': {
         'ENGINE': 'djongo',
         'NAME': 'octofit_db',
