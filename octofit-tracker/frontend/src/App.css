@@ -1,0 +1,99 @@
+/* General styles */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #e6f7ff; /* Light cyan background */
+  margin: 0;
+  padding: 0;
+}
+.App {
+  text-align: center;
+}
+/* Logo styling */
+.App-logo {
+  height: 80px;
+  margin-left: 20px;
+  float: left;
+}
+/* Header styling */
+.App-header {
+  background-color: #004d99; /* Deep blue */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+/* Navigation menu */
+nav {
+  background-color: #003366; /* Navy blue */
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+nav a {
+  color: #ffcc00; /* Gold */
+  text-decoration: none;
+  margin: 0 15px;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+nav a:hover {
+  color: #ffffff; /* White */
+}
+/* Table styling */
+table {
+  width: 90%;
+  margin: 20px auto;
+  border-collapse: collapse;
+  background-color: #ffffff; /* White background */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+table th, table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+  font-size: 1rem;
+}
+table th {
+  background-color: #004d99; /* Deep blue */
+  color: white;
+}
+table tr:nth-child(even) {
+  background-color: #e6f7ff; /* Light cyan */
+}
+table tr:hover {
+  background-color: #cceeff; /* Lighter cyan */
+}
+/* Button styling */
+button {
+  background-color: #004d99; /* Deep blue */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+button:hover {
+  background-color: #0066cc; /* Brighter blue */
+}
+/* Heading styling */
+h1, h2, h3, h4, h5, h6 {
+  color: #003366; /* Navy blue */
+}
+/* Link styling */
+a {
+  color: #004d99; /* Deep blue */
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+  color: #0066cc; /* Brighter blue */
+}
