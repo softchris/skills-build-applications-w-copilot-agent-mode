@@ -54,19 +54,26 @@ def add_user(request):
     serializer = UserSerializer(data=data)
     # Check if the username already exists
 
-    def has_duplicates(username, email):
-        try: 
-            exist = User.objects.filter(username=username).exists()
-            exist = User.objects.filter(email=email).exists()
-            print("User exist")  # Log if user is found 
-            return exist
-        except Exception as e:  
-            print(f'An unexpected error occurred: {e}')  
-            return True
+    def check_duplicates(username, email):
+        exist = User.objects.filter(username=username)
+        print(f'Checking for existing username: {username}')  # Log the check
+        if len(exist) > 0:
+            print(f'Username {username} already exists.')  
+            return True, "Username already exists."
+            
+        exist = User.objects.filter(email=email)
+        if len(exist) > 0:
+            return True, "Email already exists."
+           
+        return False, ""
+      
+
+    print('Checking for duplicates...')  # Log the start of duplicate checks
+    is_duplicate, message = check_duplicates(username, email)    
     
-    if has_duplicates(username, email):
+    if is_duplicate == True:
         print('Duplicate username or email found.')
-        return Response({'error': 'Username or email already exists.'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'error': message}, status=status.HTTP_400_BAD_REQUEST)
 
     print('Username and email checks completed.')  # Log completion of checks
     if serializer.is_valid():
