@@ -18,6 +18,8 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .views import UserViewSet, TeamViewSet, ActivityViewSet, LeaderboardViewSet, WorkoutViewSet, api_root
+from .views import add_user
+from django.http import HttpResponse
 
 router = DefaultRouter()
 router.register(r'users', UserViewSet)
@@ -33,4 +35,16 @@ urlpatterns = [
 
 urlpatterns += [
     path('', api_root, name='api-root'),
+]
+
+urlpatterns += [
+    path('api/add_user/', add_user, name='add_user'),
+]
+
+def catch_all(request):
+    print(f"Unhandled request: {request.method} {request.path}")
+    return HttpResponse("Endpoint not found", status=404)
+
+urlpatterns += [
+    path('<path:unmatched>/', catch_all),
 ]

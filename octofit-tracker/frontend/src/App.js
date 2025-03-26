@@ -45,6 +45,8 @@ function Teams() {
 
 function Users() {
   const [users, setUsers] = useState([]);
+  const [newUser, setNewUser] = useState({ username: '', email: '', password: '' });
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     fetch('/api/users/')
@@ -52,6 +54,41 @@ function Users() {
       .then(data => setUsers(data))
       .catch(error => console.error('Error fetching users:', error));
   }, []);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setNewUser({ ...newUser, [name]: value });
+  };
+
+  const handleAddUser = () => {
+    fetch('/api/add_user/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newUser),
+    })
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+        return response.json().then(err => {
+            const errorMessages = Object.entries(err)
+            .map(([field, message]) => `${field}: ${message}`)
+            .join(', ');
+            throw new Error(errorMessages || 'Failed to add user');
+        });
+      })
+      .then(data => {
+        setUsers([...users, data]);
+        setNewUser({ username: '', email: '', password: '' });
+        setErrorMessage(''); // Clear error message on success
+      })
+      .catch(error => {
+        console.error('Error adding user:', error);
+        setErrorMessage(error.message); // Set error message on failure
+      });
+  };
 
   return (
     <div className="container mt-5">
@@ -71,6 +108,45 @@ function Users() {
         ) : (
           <p className="text-center">No users available.</p>
         )}
+      </div>
+      <div className="mt-4">
+        <h2>Add New User</h2>
+        {errorMessage && (
+          <div className="alert alert-danger" role="alert">
+            {errorMessage}
+          </div>
+        )}
+        <div className="mb-3">
+          <label className="form-label">Username</label>
+          <input
+            type="text"
+            className="form-control"
+            name="username"
+            value={newUser.username}
+            onChange={handleInputChange}
+          />
+        </div>
+        <div className="mb-3">
+          <label className="form-label">Email</label>
+          <input
+            type="email"
+            className="form-control"
+            name="email"
+            value={newUser.email}
+            onChange={handleInputChange}
+          />
+        </div>
+        <div className="mb-3">
+          <label className="form-label">Password</label>
+          <input
+            type="password"
+            className="form-control"
+            name="password"
+            value={newUser.password}
+            onChange={handleInputChange}
+          />
+        </div>
+        <button className="btn btn-primary" onClick={handleAddUser}>Add User</button>
       </div>
     </div>
   );
